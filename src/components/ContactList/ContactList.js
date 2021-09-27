@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import ContactItem from '../ContactItem/ContactItem';
+import ContactItem from 'components/ContactItem/ContactItem';
 import style from './ContactList.module.css';
+import { getContacts } from 'redux/selectors';
 
 const ContactList = () => {
     const getUserContacts = (items, filter) => {
@@ -17,7 +18,7 @@ const ContactList = () => {
         return findContacts;
     };
 
-    const { items, filter } = useSelector(state => state.contacts);
+    const { items, filter } = useSelector(getContacts);
     const contacts = getUserContacts(items, filter);
 
     return (

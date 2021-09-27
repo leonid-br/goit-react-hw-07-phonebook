@@ -4,24 +4,35 @@ import ContactList from './ContactList';
 import Container from './Container';
 import Heading from './Heading';
 import Notification from './Notification';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getContacts } from 'redux/phonebook-actions';
+import { getItems, loadingGet } from 'redux/selectors';
 
-const App = ({ contacts }) => {
+const App = () => {
+    const dispatch = useDispatch();
+    const contacts = useSelector(getItems);
+    const isLoading = useSelector(loadingGet);
+
+    useEffect(() => {
+        dispatch(getContacts());
+    }, [dispatch]);
+
     return (
         <Container>
-            <Heading title={'Phonebook'} />
-            <ContactForm />
-            <Heading title={'Contacts'} />
-            {contacts.length >= 2 && <Filter />}
-
-            {contacts.length > 0 ? <ContactList /> : <Notification />}
+            {isLoading ? (
+                <h2>...Loading</h2>
+            ) : (
+                <>
+                    <Heading title={'Phonebook'} />
+                    <ContactForm />
+                    <Heading title={'Contacts'} />
+                    {contacts.length >= 2 && <Filter />}
+                    {contacts.length > 0 ? <ContactList /> : <Notification />}
+                </>
+            )}
         </Container>
     );
 };
-const mapStateToProps = state => {
-    return {
-        contacts: state.contacts.items,
-    };
-};
 
-export default connect(mapStateToProps)(App);
+export default App;

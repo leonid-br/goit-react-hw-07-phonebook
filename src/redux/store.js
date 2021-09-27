@@ -1,12 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-
 import contactReducer from './phonebook-reducer';
 
 const store = configureStore({
     reducer: {
         contacts: contactReducer,
     },
-    // middleware,
     devTools: process.env.NODE_ENV === 'development',
 });
 

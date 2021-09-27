@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/phonebook-actions';
+import { addContact } from 'redux/phonebook-actions';
 import style from './ContactForm.module.css';
 import PropTypes from 'prop-types';
+import shortid from 'shortid';
+import { getItems } from 'redux/selectors';
 
 const ContactForm = () => {
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
     const dispatch = useDispatch();
-    const contacts = useSelector(state => state.contacts.items);
+    const contacts = useSelector(getItems);
 
     const handelChange = e => {
         const { name, value } = e.target;
@@ -40,7 +42,7 @@ const ContactForm = () => {
             );
         }
 
-        dispatch(addContact(name, number));
+        dispatch(addContact({ name, number, id: shortid.generate() }));
 
         setName('');
         setNumber('');

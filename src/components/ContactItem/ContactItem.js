@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/phonebook-actions';
+import { deleteContactById } from 'redux/phonebook-actions';
 import style from './ContactItem.module.css';
 
 const ContactItem = ({ id, name, number }) => {
@@ -11,7 +11,7 @@ const ContactItem = ({ id, name, number }) => {
             <span>{name}</span>:<span className={style.number}>{number}</span>
             <button
                 type="button"
-                onClick={() => dispatch(deleteContact(id))}
+                onClick={() => dispatch(deleteContactById(id))}
                 className={style.button}
             >
                 Delete
